@@ -15,15 +15,62 @@ A serverless AI-powered chatbot built using **Amazon Lex V2**, **AWS Lambda**, *
 
 ---
 
-## 📷 Architecture
+🛠️ Setup Instructions
+1. 🧠 Create Lex V2 Bot
+Intent: CollectSizeDetails
 
-```mermaid
-graph TD
-    A[User via WhatsApp] -->|Sends Message| B[Twilio Webhook]
-    B -->|POST| C[API Gateway Endpoint]
-    C --> D[AWS Lambda (twilioToLexHandler)]
-    D --> E[Amazon Lex V2 Bot]
-    E --> F[Lambda Fulfillment Function]
-    F --> G[DynamoDB (User Data)]
-    F -->|Response| E
-    E -->|Final Reply| A
+Slots: Height, Weight, FitPreference, UsualSize
+
+Enable Lambda code hooks for dialog and fulfillment
+
+2. ⚙️ Create Lambda Function (SizeAdvisorHandler)
+Write logic to extract slot values and store in DynamoDB
+
+Attach IAM policy for DynamoDB write access
+
+3. 🧱 Create DynamoDB Table
+Table Name: SizeAdvisorUserData
+
+Primary Key: userId (String)
+
+4. 🌐 Create API Gateway
+Resource path: /twilioToLexHandler
+
+Integration type: Lambda Proxy Integration
+
+Method: ANY
+
+5. 🔗 Configure Twilio
+Phone Number: Enable for WhatsApp Sandbox
+
+Webhook URL: Set to your API Gateway endpoint
+
+🧪 Sample Conversation
+text
+Copy
+Edit
+User: I want a size recommendation
+Bot: What is your height in centimeters?
+User: 170
+Bot: Great! What is your weight in kilograms?
+User: 70
+Bot: How do you prefer the fit? (slim, regular, loose)
+User: Slim
+Bot: What size do you usually wear? (S, M, L, etc.)
+User: M
+Bot: ✅ We've saved your preferences: 170 cm, 70 kg, slim fit, size M.
+
+Folder Structure
+.
+├── lambda/
+│   ├── twilioToLexHandler.py
+│   └── sizeAdvisorHandler.py
+├── README.md
+└── architecture.png
+
+
+
+Rahul
+AWS Certified DevOps Engineer (in progress)
+GitHub: [your-username]
+Project guided by: [ChatGPT 🤖]
