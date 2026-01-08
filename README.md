@@ -70,7 +70,3 @@ Folder Structure
 
 
 
-Rahul
-AWS Certified DevOps Engineer (in progress)
-GitHub: [your-username]
-Project guided by: [ChatGPT 🤖]
